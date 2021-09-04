@@ -141,47 +141,48 @@ $('.slider-block').slick({
 });
 
 //==================== counter constructor ====================
-/*let decrementBtns = document.querySelectorAll(".decrement-button")[0];
-let incrementBtns = document.querySelectorAll(".increment-button")[0];
-let quantityInput = document.querySelectorAll(".product-quantity input")[0];
+let decrementBtns = document.querySelectorAll(".decrement-button");
+let incrementBtns = document.querySelectorAll(".increment-button");
+let quantityInputs = document.querySelectorAll(".product-quantity input");
 
-function Counter(incrementBtn, decrementBtn, inputField) {
+function Counter(incrementBtn, decrementBtn, inputField, minCount=1, maxCount=5) {
   this.domRefs = {
     incrementBtn,
     decrementBtn,
-    inputField,
+    inputField    
   };
-}
+  this.toggleButtonsState = function () {
+    //console.log(this+' toggle');
+    let count = this.domRefs.inputField.value;
+    this.domRefs.decrementBtn.disabled = count <= minCount;
+    this.domRefs.incrementBtn.disabled = count >= maxCount;
+  };
 
-const counter = new Counter(incrementBtns, decrementBtns, quantityInput);
+  this.toggleButtonsState();
 
-console.log(counter);*/
+  this.increment = function () {
+    //console.log(this+' inc');
+    let currentValue = +this.domRefs.inputField.value;
+    let nextValue = currentValue + 1;
+    this.domRefs.inputField.value = nextValue;
+    this.toggleButtonsState();
+  };
 
-/*function Car(model, year, color) {
-  this.year = year;
-  this.model = model;
-  this.color = color;
+  this.decrement = function () {
+  //console.log(this+' dec');
+  let currentValue = +this.domRefs.inputField.value;
+  let nextValue = currentValue - 1;
+  this.domRefs.inputField.value = nextValue;
+  this.toggleButtonsState();
+  };
+
+  this.domRefs.incrementBtn.addEventListener("click", this.increment.bind(this));
+  this.domRefs.decrementBtn.addEventListener("click", this.decrement.bind(this));
 };
 
-let audi = new Car("q7", 2015, "black");
-let kia = new Car("sorento", 2009,"black");
-console.log(kia);
-console.log(audi);
-function Calculator(a, b) {
-  this.a = a;
-  this.b = b;
-  this.sum = function () {
-    return this.a + this.b;
-  };
+let counterArr = [];
 
-  this.mul = function () {
-    return this.a * this.b;
-  };
-}
-
-let calc1 = new Calculator(5, 15);
-let calc2 = new Calculator(15, 15);
-
-console.log(calc2.sum());
-console.log(calc2.mul());*/
-
+for (let i=0; i<incrementBtns.length; i++){
+  counterArr[i] = new Counter(incrementBtns[i], decrementBtns[i], quantityInputs[i]);
+};
+console.log(counterArr);
